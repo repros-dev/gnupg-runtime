@@ -8,5 +8,14 @@ I MESG Resetting REPRO
 I MESG Resetting all modules
 I MESG Resetting the 'repro' module
 I MESG Re-initializing trim files for module 'repro'
-I MESG Resetting the REPRO target mapping file (/mnt/repro-template/.repro/repro-targets)
-I MESG Installing a default (empty) target mapping file to /mnt/repro-template/.repro/repro-targets
+I MESG Resetting the 'gnupg-runtime' module
+I MESG Re-initializing trim files for module 'gnupg-runtime'
+I MESG Copying /home/repro/repro-modules/gnupg-runtime-exports/demo-makefile to the 'gnupg-runtime' trim directory (/mnt/gnupg-runtime/.gnupg-runtime)
+I MESG Resetting the 'shell-notebook' module
+I MESG Re-initializing trim files for module 'shell-notebook'
+I MESG Ensuring other files listed in the 'shell-notebook' module trim manifest are in the module trim directory (/mnt/gnupg-runtime/.shell-notebook)
+I MESG Copying trim file Makefile.demo-runner from /home/repro/repro-modules/shell-notebook-master to /mnt/gnupg-runtime/.shell-notebook
+I MESG Resetting the REPRO target mapping file (/mnt/gnupg-runtime/.repro/repro-targets)
+I MESG Installing a default (empty) target mapping file to /mnt/gnupg-runtime/.repro/repro-targets
+I MESG Mapping the 'gnupg-runtime:demo:run' target to the REPRO 'run-demo' target
+I MESG Mapping the 'gnupg-runtime:demo:clean' target to the REPRO 'clean-demo' target
