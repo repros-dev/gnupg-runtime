@@ -1,1 +1,1 @@
-# repro-template
+# gnupg-runtime
