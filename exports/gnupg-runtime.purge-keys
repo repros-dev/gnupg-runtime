@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# delete files in gnupg home directory
+
+rm ${GNUPGHOME}/openpgp-revocs.d/*
+rmdir ${GNUPGHOME}/openpgp-revocs.d
+
+rm ${GNUPGHOME}/private-keys-v1.d/*
+rmdir ${GNUPGHOME}/private-keys-v1.d
+
+rm ${GNUPGHOME}/*
+rm ${GNUPGHOME}/.*

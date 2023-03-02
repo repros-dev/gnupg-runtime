@@ -1,1 +1,2 @@
 base-setup
+gnupg-runtime.purge-keys

@@ -1,4 +1,5 @@
 sudo apt-get update
 sudo apt-get -y install gnupg
 
-repro.env GNUPGHOME '$(repro.trim_dir_name_for_module gnupg-runtime)/.gnupg'
+repro.env GNUPG_RUNTIME_TRIM_DIR '$(repro.trim_dir_name_for_module gnupg-runtime)'
+repro.env GNUPGHOME '${GNUPG_RUNTIME_TRIM_DIR}/.gnupg'

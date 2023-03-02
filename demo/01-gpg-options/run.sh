@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# paths to data files
-COMMON=../common
-
 # ------------------------------------------------------------------------------
 
 bash_cell 'show gnupg version' << END_CELL
