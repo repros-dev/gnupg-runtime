@@ -1,0 +1,7 @@
+#!/bin/bash
+
+keyfile=$1
+
+head -n +1 ${keyfile}
+head -n -1 ${keyfile} | tail -n +2 | sed 's/./x/g'
+tail -n  1 ${keyfile}
