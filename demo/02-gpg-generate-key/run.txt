@@ -40,7 +40,7 @@ gpg --batch --generate-key << END_GPG_INPUT
 Key-Type: RSA
 Key-Length: 1024
 Name-Real: repro user
-Name-Email: repro@repros.org
+Name-Email: repro@repros.dev
 Passphrase: repro
 END_GPG_INPUT
 
@@ -48,7 +48,67 @@ END_GPG_INPUT
 gpg --list-keys | grep uid
 
 --------------------------------- cell outputs ---------------------------------
-uid           [ultimate] repro user <repro@repros.org>
+uid           [ultimate] repro user <repro@repros.dev>
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+====================== bash cell | export the public key =======================
+
+PUBLIC_KEY_FILE=tmp/public.pgp
+rm -f ${PUBLIC_KEY_FILE}
+gpg --output ${PUBLIC_KEY_FILE} --export --armor repro@repros.dev
+
+head -n +1 ${PUBLIC_KEY_FILE}
+head -n -1 ${PUBLIC_KEY_FILE} | tail -n +2 | sed 's/./x/g'
+tail -n  1 ${PUBLIC_KEY_FILE}
+
+--------------------------------- cell outputs ---------------------------------
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxx
+-----END PGP PUBLIC KEY BLOCK-----
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+====================== bash cell | export the private key ======================
+
+PRIVATE_KEY_FILE=tmp/private.asc
+rm -f ${PRIVATE_KEY_FILE}
+gpg --export-secret-key --pinentry-mode loopback --armor --passphrase=repro > ${PRIVATE_KEY_FILE}
+
+head -n +1 ${PRIVATE_KEY_FILE}
+head -n -1 ${PRIVATE_KEY_FILE} | tail -n +2 | sed 's/./x/g'
+tail -n  1 ${PRIVATE_KEY_FILE}
+
+--------------------------------- cell outputs ---------------------------------
+-----BEGIN PGP PRIVATE KEY BLOCK-----
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxx
+-----END PGP PRIVATE KEY BLOCK-----
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 

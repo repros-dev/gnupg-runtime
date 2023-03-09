@@ -33,7 +33,7 @@ gpg --batch --generate-key << END_GPG_INPUT
 Key-Type: RSA
 Key-Length: 1024
 Name-Real: repro user
-Name-Email: repro@repros.org
+Name-Email: repro@repros.dev
 Passphrase: repro
 END_GPG_INPUT
 
@@ -42,4 +42,32 @@ gpg --list-keys | grep uid
 
 END_CELL
 
+# ------------------------------------------------------------------------------
+
+bash_cell 'export the public key' << 'END_CELL'
+
+PUBLIC_KEY_FILE=tmp/public.pgp
+rm -f ${PUBLIC_KEY_FILE}
+gpg --output ${PUBLIC_KEY_FILE} --export --armor repro@repros.dev
+
+head -n +1 ${PUBLIC_KEY_FILE}
+head -n -1 ${PUBLIC_KEY_FILE} | tail -n +2 | sed 's/./x/g'
+tail -n  1 ${PUBLIC_KEY_FILE}
+
+END_CELL
+
+
+# ------------------------------------------------------------------------------
+
+bash_cell 'export the private key' << 'END_CELL'
+
+PRIVATE_KEY_FILE=tmp/private.asc
+rm -f ${PRIVATE_KEY_FILE}
+gpg --export-secret-key --pinentry-mode loopback --armor --passphrase=repro > ${PRIVATE_KEY_FILE}
+
+head -n +1 ${PRIVATE_KEY_FILE}
+head -n -1 ${PRIVATE_KEY_FILE} | tail -n +2 | sed 's/./x/g'
+tail -n  1 ${PRIVATE_KEY_FILE}
+
+END_CELL
 
