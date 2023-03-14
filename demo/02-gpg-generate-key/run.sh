@@ -7,14 +7,11 @@ bash_cell 'delete gnupg home directory' << 'END_CELL'
 # delete contents of the .gnupg directory for this REPRO
 gnupg-runtime.purge-keys
 
-# show that the gnupg home directory is now empty
-tree -a ${GNUPGHOME}
-
 END_CELL
 
 # ------------------------------------------------------------------------------
 
-bash_cell 'delete gnupg home directory' << 'END_CELL'
+bash_cell 'create gnupg home directory' << 'END_CELL'
 
 # list the gpg keys to force creation of the gpg home directory
 gpg --list-keys 2>&1

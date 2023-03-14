@@ -2,11 +2,5 @@
 
 # delete files in gnupg home directory
 
-rm ${GNUPGHOME}/openpgp-revocs.d/*
-rmdir ${GNUPGHOME}/openpgp-revocs.d
-
-rm ${GNUPGHOME}/private-keys-v1.d/*
-rmdir ${GNUPGHOME}/private-keys-v1.d
-
-rm ${GNUPGHOME}/*
-rm ${GNUPGHOME}/.*
+find ${GNUPGHOME} -depth -maxdepth 2 \( -type f -o -type s \) -exec rm -f {} \; 2>/dev/null
+find ${GNUPGHOME} -depth -maxdepth 1 -type d -exec rmdir {} \; 2>/dev/null

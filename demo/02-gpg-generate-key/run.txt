@@ -3,17 +3,11 @@
 # delete contents of the .gnupg directory for this REPRO
 gnupg-runtime.purge-keys
 
-# show that the gnupg home directory is now empty
-tree -a ${GNUPGHOME}
-
 --------------------------------- cell outputs ---------------------------------
-/mnt/gnupg-runtime/.gnupg-runtime/.gnupg
-
-0 directories, 0 files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-=================== bash cell | delete gnupg home directory ====================
+=================== bash cell | create gnupg home directory ====================
 
 # list the gpg keys to force creation of the gpg home directory
 gpg --list-keys 2>&1
@@ -23,6 +17,7 @@ echo
 tree -a ${GNUPGHOME}
 
 --------------------------------- cell outputs ---------------------------------
+gpg: directory '/mnt/gnupg-runtime/.gnupg-runtime/.gnupg' created
 gpg: keybox '/mnt/gnupg-runtime/.gnupg-runtime/.gnupg/pubring.kbx' created
 gpg: /mnt/gnupg-runtime/.gnupg-runtime/.gnupg/trustdb.gpg: trustdb created
 

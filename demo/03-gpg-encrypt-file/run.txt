@@ -1,0 +1,83 @@
+=================== bash cell | delete gnupg home directory ====================
+
+# delete contents of the .gnupg directory for this REPRO
+gnupg-runtime.purge-keys
+
+--------------------------------- cell outputs ---------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+======================= bash cell | import a private key =======================
+
+gpg --import --pinentry-mode loopback --passphrase=repro data/private.asc
+
+# list the gpg keys
+gpg --list-keys
+
+# show the public key that was bundled with the private key
+gpg --export --armor repro@repros.dev
+
+--------------------------------- cell outputs ---------------------------------
+/mnt/gnupg-runtime/.gnupg-runtime/.gnupg/pubring.kbx
+----------------------------------------------------
+pub   rsa1024 2023-03-14 [SCEA]
+      A168CC1B1D30CC9D079AD5FEA34F78D2B23714E8
+uid           [ unknown] repro user <repro@repros.dev>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mI0EZA/vhwEEAObX3uatgdgAZd8aIYxOWsUNHHsNQ8M0TWr/tA9+mv76cRq4t4Gc
+77IBU4n47JXd6Ce849N3JtmWN5479ta2zIed9R+rUfgcJjW5s2Mnwb7cK6YhyOI5
+wGkMoLwpAR2DjijRCOe/KEqp+NneYEOuE3CSyL0gaFR1htdiu933Y40HABEBAAG0
+HXJlcHJvIHVzZXIgPHJlcHJvQHJlcHJvcy5kZXY+iM4EEwEKADgWIQShaMwbHTDM
+nQea1f6jT3jSsjcU6AUCZA/vhwIbLwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAK
+CRCjT3jSsjcU6H6CBACTLP0nC/pUDr2kh31InvH72WmoFVg5YmJ7N7P4sUVnlyIy
+V6PF4u/IV7igs2kgMCSRxEoKvZ1SeiAqZS8w54CnuhIJrO7rwDIrOJTPQARyrKwE
+SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
+=8Jrj
+-----END PGP PUBLIC KEY BLOCK-----
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+================ bash cell | encrypt the message in a text file ================
+
+ENCRYPTED_FILE=products/message.asc
+rm -f ${ENCRYPTED_FILE}
+
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_FILE} data/message.txt
+
+cat ${ENCRYPTED_FILE}
+
+--------------------------------- cell outputs ---------------------------------
+-----BEGIN PGP MESSAGE-----
+
+hIwDo0940rI3FOgBBADO76Xku4UUlo3tnutwzRWtOQXlPBbE3/Qq7O5A76V3ooCP
+VO0rRhYuOTxJw4VRpm0vosXcjhXBSO1tcQs8dRUFTmoSK1FMMxA9R/4scjaBDH6j
+cBtPwcqwp9DKbBF6Y0B9UyUUHB38BH3ChZmVvKr/zRrTmXMRzHA7uWzU8P2WYNLA
+mQFJVMc10aOobbLvPwF/nAeLcg+1XZJXwgPIQib+miFYknnBjQqd86xFxJjrRtQg
+rjlfL2dlLQSjjm2/FNV+aCtl8cpVOgSJI5ibATeUT/juo5/tesArKpqjOcq22F5g
++iiRnKBC/ZBigXbfULrgViO++vBQAuq+ZiyhifIRZORjIsYsDyS/ePvVCfyiCcmk
+u0A/8j3vl5XMbRNfAdNFnOvYAjKN9JBJPU8loHcW+DN6aZX9oK+CcMerAMxFEhty
+Srxfj9LmL6UkjeL2Y6mr6lVgfnxSZDFY8o3WgQfWA8D/WhQsky+T/ZndZKRukoiH
+YRZ4SUsPEOaMT63dRU/g8mfSPsfyDUXGFnxwnIlZsdKnRJIOG+f1rj/BQzwihZjR
+6joRHYeOt5pkcbRcLZjm5p/KgF87JK+6Ts84cDoIzIg+d7ZWPaYJeDrr3dSEqWX9
+13F2cGIqVsMpnA==
+=bybK
+-----END PGP MESSAGE-----
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+======================= bash cell | decrypt the message ========================
+
+gpg --decrypt --pinentry-mode loopback --passphrase=repro products/message.asc
+
+--------------------------------- cell outputs ---------------------------------
+Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor
+incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex
+ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
