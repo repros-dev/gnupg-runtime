@@ -30,8 +30,8 @@ rm -f ${MESSAGE_SIGNATURE_FILE}
 
 gpg --detach-sign --local-user repro@repros.dev \
     --pinentry-mode loopback --passphrase=repro \
-    --output ${MESSAGE_SIGNATURE_FILE}          \
-    --armor ${MESSAGE_FILE} 2>&1
+    -a -o ${MESSAGE_SIGNATURE_FILE}             \
+    ${MESSAGE_FILE} 2>&1
 
 gnupg-runtime.redact-key ${MESSAGE_SIGNATURE_FILE}
 
@@ -52,7 +52,7 @@ echo
 gpg --list-keys
 
 # show the public key that was imported
-gpg --export --armor repro@repros.dev
+gpg --export -a repro@repros.dev
 
 END_CELL
 

@@ -10,7 +10,7 @@ gpg --import data/public.gpg 2>&1
 gpg --list-keys
 
 # show the public key that was imported
-gpg --export --armor repro@repros.dev
+gpg --export -a repro@repros.dev
 
 --------------------------------- cell outputs ---------------------------------
 gpg: directory '/mnt/gnupg-runtime/.gnupg-runtime/.gnupg' created
@@ -44,7 +44,7 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 rm -f tmp/message.asc
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output tmp/message.asc data/message.txt 2>&1
+gpg --encrypt --always-trust -a --recipient repro@repros.dev -o tmp/message.asc data/message.txt 2>&1
 
 gnupg-runtime.redact-key tmp/message.asc
 
@@ -76,7 +76,7 @@ gpg --import --pinentry-mode loopback --passphrase=repro data/private.asc 2>&1
 gpg --list-keys
 
 # show the public key that was bundled in the private key file
-gpg --export --armor repro@repros.dev
+gpg --export -a repro@repros.dev
 
 --------------------------------- cell outputs ---------------------------------
 gpg: key A34F78D2B23714E8: "repro user <repro@repros.dev>" not changed

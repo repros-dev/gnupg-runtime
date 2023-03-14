@@ -46,7 +46,7 @@ bash_cell 'export the public key' << 'END_CELL'
 # export the public key
 PUBLIC_KEY_FILE=tmp/public.pgp
 rm -f ${PUBLIC_KEY_FILE}
-gpg --output ${PUBLIC_KEY_FILE} --export --armor repro@repros.dev
+gpg --export -a -o ${PUBLIC_KEY_FILE} repro@repros.dev
 
 # print a redacted view of the public key
 gnupg-runtime.redact-key ${PUBLIC_KEY_FILE}
@@ -61,7 +61,7 @@ bash_cell 'export the private key' << 'END_CELL'
 # export the private key
 PRIVATE_KEY_FILE=tmp/private.asc
 rm -f ${PRIVATE_KEY_FILE}
-gpg --export-secret-key --pinentry-mode loopback --armor --passphrase=repro > ${PRIVATE_KEY_FILE}
+gpg --export-secret-key -a --pinentry-mode loopback --passphrase=repro > ${PRIVATE_KEY_FILE}
 
 # print a redacted view of the private key
 gnupg-runtime.redact-key ${PRIVATE_KEY_FILE}

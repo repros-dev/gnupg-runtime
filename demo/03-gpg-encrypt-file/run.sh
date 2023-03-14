@@ -19,7 +19,7 @@ gpg --import ${PUBLIC_KEY_FILE} 2>&1
 gpg --list-keys
 
 # show the public key that was imported
-gpg --export --armor repro@repros.dev
+gpg --export -a repro@repros.dev
 
 END_CELL
 
@@ -29,7 +29,7 @@ bash_cell 'encrypt a file using the public key' << END_CELL
 
 rm -f ${ENCRYPTED_MESSAGE_FILE}
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE} 2>&1
+gpg --encrypt --always-trust -a --recipient repro@repros.dev -o ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE} 2>&1
 
 gnupg-runtime.redact-key ${ENCRYPTED_MESSAGE_FILE}
 
@@ -47,7 +47,7 @@ gpg --import --pinentry-mode loopback --passphrase=repro ${PRIVATE_KEY_FILE} 2>&
 gpg --list-keys
 
 # show the public key that was bundled in the private key file
-gpg --export --armor repro@repros.dev
+gpg --export -a repro@repros.dev
 
 END_CELL
 
