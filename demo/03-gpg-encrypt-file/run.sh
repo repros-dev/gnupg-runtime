@@ -3,7 +3,7 @@
 PUBLIC_KEY_FILE=data/public.pgp
 PRIVATE_KEY_FILE=data/private.asc
 CLEAR_MESSAGE_FILE=data/message.txt
-ENCRYPTED_MESSAGE_FILE=products/message.asc
+ENCRYPTED_MESSAGE_FILE=tmp/message.asc
 
 # ------------------------------------------------------------------------------
 
@@ -30,8 +30,6 @@ bash_cell 'encrypt a file using the public key' << END_CELL
 rm -f ${ENCRYPTED_MESSAGE_FILE}
 
 gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE} 2>&1
-
-cat ${ENCRYPTED_MESSAGE_FILE}
 
 END_CELL
 

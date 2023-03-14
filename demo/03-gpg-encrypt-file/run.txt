@@ -42,28 +42,11 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 =============== bash cell | encrypt a file using the public key ================
 
-rm -f products/message.asc
+rm -f tmp/message.asc
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output products/message.asc data/message.txt 2>&1
-
-cat products/message.asc
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output tmp/message.asc data/message.txt 2>&1
 
 --------------------------------- cell outputs ---------------------------------
------BEGIN PGP MESSAGE-----
-
-hIwDo0940rI3FOgBA/9En3lxeaYqB1Efq0ZwS0tZyJhip/YTjrcyfoRw3iz9tENW
-jHRHHN6aU7shh9jX+sVokfRhTRru8vD6WZBoghxSjZ6GM3DVnRiQgmcGk5WmWoeP
-JzcNcq0BvJoYsaB8AUnM9+zzvIRKW7S3Z6OiN/1sEqsIjSSwhc+3dmYhmgi0yNLA
-mAGdF0zOgsyTe5WHFa7df8Cu7BCklfENaoso6Hyxqikf8XyreJDjvJgFjbo6dSnU
-3VMlv9kU6ruaL5GhlbzKGyCG3XZ+x3x6Bt+CXrOBcLWRHFK14oKerw2U1ACSIrUv
-92yHHS8vSmqZjWY3lRvtt7zbV8LZfQDsXg8VltLh2DVZC70DJoKJa2izoHGjRVR9
-4/VLz/bn+If4QKRkuzdtLufd3jpC0JuQm+oJBVqxR/xLu6dmXFz2emW7B8pycHNW
-u03SoPWBygnONGIn3xf0ijnkYK6Bh1Van5Akqi+D9oROHN0wM1/r4MN9yFx7nJmL
-xSCAtvjypoMTWM5e5RVero9Y6yz47/naN1aWS/cUqddd0ZOHtBOIXRAKCdtFrjjH
-yBT1kmOXWfqXJboIZd+Ysx1MkqCv62uE4johOTX6liD1y8ZsgdLBDXWd7uHQMx04
-+OL+tFquo72E
-=JKa/
------END PGP MESSAGE-----
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -108,7 +91,7 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 ============ bash cell | decrypt the message using the private key =============
 
-gpg --decrypt --pinentry-mode loopback --passphrase=repro products/message.asc 2>&1
+gpg --decrypt --pinentry-mode loopback --passphrase=repro tmp/message.asc 2>&1
 
 --------------------------------- cell outputs ---------------------------------
 gpg: encrypted with 1024-bit RSA key, ID A34F78D2B23714E8, created 2023-03-14
