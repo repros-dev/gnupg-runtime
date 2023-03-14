@@ -42,11 +42,11 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 =============== bash cell | encrypt a file using the public key ================
 
-rm -f tmp/message.asc
+rm -f tmp/encrypted_message.asc
 
-gpg --encrypt --always-trust -a --recipient repro@repros.dev -o tmp/message.asc data/message.txt 2>&1
+gpg --encrypt --always-trust -a --recipient repro@repros.dev -o tmp/encrypted_message.asc data/message.txt 2>&1
 
-gnupg-runtime.redact-key tmp/message.asc
+gnupg-runtime.redact-key tmp/encrypted_message.asc
 
 --------------------------------- cell outputs ---------------------------------
 -----BEGIN PGP MESSAGE-----
@@ -108,7 +108,7 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 ============ bash cell | decrypt the message using the private key =============
 
-gpg --decrypt --pinentry-mode loopback --passphrase=repro tmp/message.asc 2>&1
+gpg --decrypt --pinentry-mode loopback --passphrase=repro tmp/encrypted_message.asc 2>&1
 
 --------------------------------- cell outputs ---------------------------------
 gpg: encrypted with 1024-bit RSA key, ID A34F78D2B23714E8, created 2023-03-14
