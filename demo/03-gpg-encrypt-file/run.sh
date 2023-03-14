@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 
+PUBLIC_KEY_FILE=data/public.pgp
 PRIVATE_KEY_FILE=data/private.asc
 CLEAR_MESSAGE_FILE=data/message.txt
 ENCRYPTED_MESSAGE_FILE=products/message.asc
@@ -17,7 +18,35 @@ END_CELL
 
 # ------------------------------------------------------------------------------
 
-bash_cell 'import a private key and bundled public key' << END_CELL
+bash_cell 'import the public key for repro@repros.dev' << END_CELL
+
+# import the private key file
+gpg --import ${PUBLIC_KEY_FILE}
+
+# list the gpg keys
+gpg --list-keys
+
+# show the public key that was imported
+gpg --export --armor repro@repros.dev
+
+END_CELL
+
+# ------------------------------------------------------------------------------
+
+bash_cell 'encrypt a file using the public key' << END_CELL
+
+rm -f ${ENCRYPTED_MESSAGE_FILE}
+
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE}
+
+cat ${ENCRYPTED_MESSAGE_FILE}
+
+END_CELL
+
+
+# ------------------------------------------------------------------------------
+
+bash_cell 'import the private key for repros.dev' << END_CELL
 
 # import the private key file
 gpg --import --pinentry-mode loopback --passphrase=repro ${PRIVATE_KEY_FILE}
@@ -30,21 +59,10 @@ gpg --export --armor repro@repros.dev
 
 END_CELL
 
-# ------------------------------------------------------------------------------
-
-bash_cell 'encrypt the message in a text file using the public key for repro@repros.dev' << END_CELL
-
-rm -f ${ENCRYPTED_MESSAGE_FILE}
-
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE}
-
-cat ${ENCRYPTED_MESSAGE_FILE}
-
-END_CELL
 
 # ------------------------------------------------------------------------------
 
-bash_cell 'decrypt the message using the private key for repro@repros.dev' << END_CELL
+bash_cell 'decrypt the message using the private key' << END_CELL
 
 gpg --decrypt --pinentry-mode loopback --passphrase=repro ${ENCRYPTED_MESSAGE_FILE}
 
