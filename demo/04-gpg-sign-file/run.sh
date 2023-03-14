@@ -4,7 +4,7 @@
 PUBLIC_KEY_FILE=data/public.pgp
 PRIVATE_KEY_FILE=data/private.asc
 MESSAGE_FILE=data/message.txt
-MESSAGE_SIGNATURE_FILE=products/message.sig
+MESSAGE_SIGNATURE_FILE=tmp/message.sig
 
 # ------------------------------------------------------------------------------
 
@@ -28,9 +28,12 @@ bash_cell 'sign a file using the private key' << END_CELL
 
 rm -f ${MESSAGE_SIGNATURE_FILE}
 
-gpg --detach-sign --local-user repro@repros.dev --pinentry-mode loopback --passphrase=repro --output ${MESSAGE_SIGNATURE_FILE} --armor ${MESSAGE_FILE}
+gpg --detach-sign --local-user repro@repros.dev \
+    --pinentry-mode loopback --passphrase=repro \
+    --output ${MESSAGE_SIGNATURE_FILE}          \
+    --armor ${MESSAGE_FILE} 2>&1
 
-cat ${MESSAGE_SIGNATURE_FILE}
+gnupg-runtime.redact-key ${MESSAGE_SIGNATURE_FILE}
 
 END_CELL
 

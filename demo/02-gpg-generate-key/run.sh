@@ -49,7 +49,7 @@ rm -f ${PUBLIC_KEY_FILE}
 gpg --output ${PUBLIC_KEY_FILE} --export --armor repro@repros.dev
 
 # print a redacted view of the public key
-gnupg-runtime.redact-key  ${PUBLIC_KEY_FILE}
+gnupg-runtime.redact-key ${PUBLIC_KEY_FILE}
 
 END_CELL
 

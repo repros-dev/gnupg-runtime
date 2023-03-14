@@ -31,6 +31,8 @@ rm -f ${ENCRYPTED_MESSAGE_FILE}
 
 gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE} 2>&1
 
+gnupg-runtime.redact-key ${ENCRYPTED_MESSAGE_FILE}
+
 END_CELL
 
 
