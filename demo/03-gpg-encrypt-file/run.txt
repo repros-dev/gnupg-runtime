@@ -1,16 +1,10 @@
-=================== bash cell | delete gnupg home directory ====================
+============ bash cell | import the public key for repro@repros.dev ============
 
 # delete contents of the .gnupg directory for this REPRO
 gnupg-runtime.purge-keys
 
---------------------------------- cell outputs ---------------------------------
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-============ bash cell | import the public key for repro@repros.dev ============
-
 # import the private key file
-gpg --import data/public.pgp
+gpg --import data/public.pgp 2>&1
 
 # list the gpg keys
 gpg --list-keys
@@ -19,6 +13,12 @@ gpg --list-keys
 gpg --export --armor repro@repros.dev
 
 --------------------------------- cell outputs ---------------------------------
+gpg: directory '/mnt/gnupg-runtime/.gnupg-runtime/.gnupg' created
+gpg: keybox '/mnt/gnupg-runtime/.gnupg-runtime/.gnupg/pubring.kbx' created
+gpg: /mnt/gnupg-runtime/.gnupg-runtime/.gnupg/trustdb.gpg: trustdb created
+gpg: key A34F78D2B23714E8: public key "repro user <repro@repros.dev>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
 /mnt/gnupg-runtime/.gnupg-runtime/.gnupg/pubring.kbx
 ----------------------------------------------------
 pub   rsa1024 2023-03-14 [SCEA]
@@ -44,33 +44,33 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 rm -f products/message.asc
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output products/message.asc data/message.txt
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output products/message.asc data/message.txt 2>&1
 
 cat products/message.asc
 
 --------------------------------- cell outputs ---------------------------------
 -----BEGIN PGP MESSAGE-----
 
-hIwDo0940rI3FOgBBACQ0Yo7qy3BFw1l12cCOZFwtp4JvuQiLrrtCGx0Pyodpt5e
-6kl2fY7yn6enZQasrfYAVLmE9uKh+VIXJRSwCIAncz5fmJEWJYVtrKef9wW/lOgW
-fVaxD0NLYgdlggxiywOtnLc6VHatbjktVSdjhc1VvjlDaRnQJud+wHvuC06iFdLA
-mgEvO2LoBrBsH68hwDf8neHCz8YHzeFCshxUMSFHdLSzRD/V/rqvVWcZcU2xVw/n
-tMcC851mvSOKbGRMJpiedliFNQ8Ns4F3KGq3672jQT1nAWfnlGQIGA4bzXUj7fxL
-7fN8UfriZkR/eXEbUyQbPknelcRT5Tdbiqr+4SMBeFYRNkWOqMgOC9iuCN0Q7IJQ
-4GOvuvJ4QCrbss2xVcql4+fGEXaz5eoBZzdu5YKs3NPYF4zstR48ROny+cM9qlcT
-pKkzrGUQDG38iM2bBSP1My5hj0HmmTQvkO1xKEHf1gpHu+bnX/oYirhWo6Pem1OQ
-0v6KmGjIBwThU5nSEHVa52PhgqEa5hM4KK6ENjyN3LapbSmaiw2a/LTx8bOScP/C
-t39gq6L7/UKIAHrX0pMZ23myWzrwf2A2+jFck9oXhERdJyaQQ7XZaqDJtuM6yNos
-vPp/7BJjOtcyyr0=
-=pRVy
+hIwDo0940rI3FOgBA/9En3lxeaYqB1Efq0ZwS0tZyJhip/YTjrcyfoRw3iz9tENW
+jHRHHN6aU7shh9jX+sVokfRhTRru8vD6WZBoghxSjZ6GM3DVnRiQgmcGk5WmWoeP
+JzcNcq0BvJoYsaB8AUnM9+zzvIRKW7S3Z6OiN/1sEqsIjSSwhc+3dmYhmgi0yNLA
+mAGdF0zOgsyTe5WHFa7df8Cu7BCklfENaoso6Hyxqikf8XyreJDjvJgFjbo6dSnU
+3VMlv9kU6ruaL5GhlbzKGyCG3XZ+x3x6Bt+CXrOBcLWRHFK14oKerw2U1ACSIrUv
+92yHHS8vSmqZjWY3lRvtt7zbV8LZfQDsXg8VltLh2DVZC70DJoKJa2izoHGjRVR9
+4/VLz/bn+If4QKRkuzdtLufd3jpC0JuQm+oJBVqxR/xLu6dmXFz2emW7B8pycHNW
+u03SoPWBygnONGIn3xf0ijnkYK6Bh1Van5Akqi+D9oROHN0wM1/r4MN9yFx7nJmL
+xSCAtvjypoMTWM5e5RVero9Y6yz47/naN1aWS/cUqddd0ZOHtBOIXRAKCdtFrjjH
+yBT1kmOXWfqXJboIZd+Ysx1MkqCv62uE4johOTX6liD1y8ZsgdLBDXWd7uHQMx04
++OL+tFquo72E
+=JKa/
 -----END PGP MESSAGE-----
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-============== bash cell | import the private key for repros.dev ===============
+=========== bash cell | import the private key for repro@repros.dev ============
 
 # import the private key file
-gpg --import --pinentry-mode loopback --passphrase=repro data/private.asc
+gpg --import --pinentry-mode loopback --passphrase=repro data/private.asc 2>&1
 
 # list the gpg keys
 gpg --list-keys
@@ -79,6 +79,12 @@ gpg --list-keys
 gpg --export --armor repro@repros.dev
 
 --------------------------------- cell outputs ---------------------------------
+gpg: key A34F78D2B23714E8: "repro user <repro@repros.dev>" not changed
+gpg: key A34F78D2B23714E8: secret key imported
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
 /mnt/gnupg-runtime/.gnupg-runtime/.gnupg/pubring.kbx
 ----------------------------------------------------
 pub   rsa1024 2023-03-14 [SCEA]
@@ -102,9 +108,11 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 ============ bash cell | decrypt the message using the private key =============
 
-gpg --decrypt --pinentry-mode loopback --passphrase=repro products/message.asc
+gpg --decrypt --pinentry-mode loopback --passphrase=repro products/message.asc 2>&1
 
 --------------------------------- cell outputs ---------------------------------
+gpg: encrypted with 1024-bit RSA key, ID A34F78D2B23714E8, created 2023-03-14
+      "repro user <repro@repros.dev>"
 Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor
 incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
 nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex

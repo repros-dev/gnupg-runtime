@@ -7,19 +7,13 @@ ENCRYPTED_MESSAGE_FILE=products/message.asc
 
 # ------------------------------------------------------------------------------
 
-bash_cell 'delete gnupg home directory' << END_CELL
+bash_cell 'import the public key for repro@repros.dev' << END_CELL
 
 # delete contents of the .gnupg directory for this REPRO
 gnupg-runtime.purge-keys
 
-END_CELL
-
-# ------------------------------------------------------------------------------
-
-bash_cell 'import the public key for repro@repros.dev' << END_CELL
-
 # import the private key file
-gpg --import ${PUBLIC_KEY_FILE}
+gpg --import ${PUBLIC_KEY_FILE} 2>&1
 
 # list the gpg keys
 gpg --list-keys
@@ -35,7 +29,7 @@ bash_cell 'encrypt a file using the public key' << END_CELL
 
 rm -f ${ENCRYPTED_MESSAGE_FILE}
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE}
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_MESSAGE_FILE} ${CLEAR_MESSAGE_FILE} 2>&1
 
 cat ${ENCRYPTED_MESSAGE_FILE}
 
@@ -47,7 +41,7 @@ END_CELL
 bash_cell 'import the private key for repro@repros.dev' << END_CELL
 
 # import the private key file
-gpg --import --pinentry-mode loopback --passphrase=repro ${PRIVATE_KEY_FILE}
+gpg --import --pinentry-mode loopback --passphrase=repro ${PRIVATE_KEY_FILE} 2>&1
 
 # list the gpg keys
 gpg --list-keys
@@ -62,6 +56,6 @@ END_CELL
 
 bash_cell 'decrypt the message using the private key' << END_CELL
 
-gpg --decrypt --pinentry-mode loopback --passphrase=repro ${ENCRYPTED_MESSAGE_FILE}
+gpg --decrypt --pinentry-mode loopback --passphrase=repro ${ENCRYPTED_MESSAGE_FILE} 2>&1
 
 END_CELL
