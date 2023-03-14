@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 
-PUBLIC_KEY_FILE=data/public.pgp
+PUBLIC_KEY_FILE=data/public.gpg
 PRIVATE_KEY_FILE=data/private.asc
 MESSAGE_FILE=data/message.txt
-MESSAGE_SIGNATURE_FILE=tmp/message.sig
+MESSAGE_SIGNATURE_FILE=tmp/message.asc
 
 # ------------------------------------------------------------------------------
 

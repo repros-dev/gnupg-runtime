@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PUBLIC_KEY_FILE=data/public.pgp
+PUBLIC_KEY_FILE=data/public.gpg
 PRIVATE_KEY_FILE=data/private.asc
 CLEAR_MESSAGE_FILE=data/message.txt
 ENCRYPTED_MESSAGE_FILE=tmp/message.asc

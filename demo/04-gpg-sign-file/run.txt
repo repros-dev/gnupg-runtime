@@ -32,11 +32,11 @@ uid           [ unknown] repro user <repro@repros.dev>
 
 ================ bash cell | sign a file using the private key =================
 
-rm -f tmp/message.sig
+rm -f tmp/message.asc
 
-gpg --detach-sign --local-user repro@repros.dev     --pinentry-mode loopback --passphrase=repro     --output tmp/message.sig              --armor data/message.txt 2>&1
+gpg --detach-sign --local-user repro@repros.dev     --pinentry-mode loopback --passphrase=repro     --output tmp/message.asc              --armor data/message.txt 2>&1
 
-gnupg-runtime.redact-key tmp/message.sig
+gnupg-runtime.redact-key tmp/message.asc
 
 --------------------------------- cell outputs ---------------------------------
 -----BEGIN PGP SIGNATURE-----
@@ -57,7 +57,7 @@ xxxxx
 gnupg-runtime.purge-keys
 
 # import the public key file
-gpg --import data/public.pgp 2>&1
+gpg --import data/public.gpg 2>&1
 echo
 
 # list the gpg keys
@@ -97,7 +97,7 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 
 ====== bash cell | verify the message and signature using the public key =======
 
-gpg -v --verify tmp/message.sig data/message.txt 2>&1 | tail -6
+gpg -v --verify tmp/message.asc data/message.txt 2>&1 | tail -6
 
 --------------------------------- cell outputs ---------------------------------
 gpg: using pgp trust model
