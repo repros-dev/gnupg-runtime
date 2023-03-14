@@ -7,14 +7,15 @@ gnupg-runtime.purge-keys
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-======================= bash cell | import a private key =======================
+=========== bash cell | import a private key and bundled public key ============
 
+# import the private key file
 gpg --import --pinentry-mode loopback --passphrase=repro data/private.asc
 
 # list the gpg keys
 gpg --list-keys
 
-# show the public key that was bundled with the private key
+# show the public key that was bundled in the private key file
 gpg --export --armor repro@repros.dev
 
 --------------------------------- cell outputs ---------------------------------
@@ -39,35 +40,34 @@ SR6WBBseauZDz2KXC/4AcfaFWfqHXNrkPT3DTgHT32ZVGzpReOgCh0QWhXVeMQ==
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-================ bash cell | encrypt the message in a text file ================
+=== bash cell | encrypt the message in a text file using the public key for repro@repros.dev ===
 
-ENCRYPTED_FILE=products/message.asc
-rm -f ${ENCRYPTED_FILE}
+rm -f products/message.asc
 
-gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output ${ENCRYPTED_FILE} data/message.txt
+gpg --encrypt --always-trust --armor --recipient repro@repros.dev --output products/message.asc data/message.txt
 
-cat ${ENCRYPTED_FILE}
+cat products/message.asc
 
 --------------------------------- cell outputs ---------------------------------
 -----BEGIN PGP MESSAGE-----
 
-hIwDo0940rI3FOgBBADO76Xku4UUlo3tnutwzRWtOQXlPBbE3/Qq7O5A76V3ooCP
-VO0rRhYuOTxJw4VRpm0vosXcjhXBSO1tcQs8dRUFTmoSK1FMMxA9R/4scjaBDH6j
-cBtPwcqwp9DKbBF6Y0B9UyUUHB38BH3ChZmVvKr/zRrTmXMRzHA7uWzU8P2WYNLA
-mQFJVMc10aOobbLvPwF/nAeLcg+1XZJXwgPIQib+miFYknnBjQqd86xFxJjrRtQg
-rjlfL2dlLQSjjm2/FNV+aCtl8cpVOgSJI5ibATeUT/juo5/tesArKpqjOcq22F5g
-+iiRnKBC/ZBigXbfULrgViO++vBQAuq+ZiyhifIRZORjIsYsDyS/ePvVCfyiCcmk
-u0A/8j3vl5XMbRNfAdNFnOvYAjKN9JBJPU8loHcW+DN6aZX9oK+CcMerAMxFEhty
-Srxfj9LmL6UkjeL2Y6mr6lVgfnxSZDFY8o3WgQfWA8D/WhQsky+T/ZndZKRukoiH
-YRZ4SUsPEOaMT63dRU/g8mfSPsfyDUXGFnxwnIlZsdKnRJIOG+f1rj/BQzwihZjR
-6joRHYeOt5pkcbRcLZjm5p/KgF87JK+6Ts84cDoIzIg+d7ZWPaYJeDrr3dSEqWX9
-13F2cGIqVsMpnA==
-=bybK
+hIwDo0940rI3FOgBA/wIVurQc6ov16vU3/jPKkGsY2TKFiJlPVrNsaW0ZfHJnmSg
+p6abnG1GWhKWmQTo1zXA1WEDpAw2udJGBtyZLOoSJ+pOhVptWFFxHDHpwXIuH0B3
+gzqP0c2GfRYMtkdDTh3aZCZ/VbqT64WMVR4JWT0JLyOxWRo+1/5aZYpN45eJz9LA
+mwE/0r5UJkbhl4CiqEdPG/XGqj8aHrb3uwcCXJ5QdNwlcKmuog+TDHnasZS+4BUv
+YZb2yiueJT903HzZzH+VhqHxdjX4bAHpVBBQ/R0xAsMM6IPI0vSXhelS65Qv8CkI
+W4Clf/92POUYULDcUkSjB8KfCWXmU3QxwjCb58lcSBShX87ASvuSfcSXaatBoPq1
+eRHcX0E/n+gfXbHGSSbEKv2q1YWUXshOWGewV4z5Rh1l2midf/Wt5v6tyt0XLDoT
+zHGrwLOgCYr4vi4xEp/NcqUqIMJ+HlJ9Y/4zPla9fsprS18eeuqWFJQ8xaCMgA31
+pOsmTCj94PKHAurrlsvEBm/DaA2TKqmMcyQSdak6/aIcEEjw2BjFC7m4t2f550Yg
+WW/R4StH0XNBgXTtZOETmgmzpFMQlCqAI90BdWtwVVv7DZWwEq48kwW4TC0jxQ+U
+HzTfL8pWWKCLWmyL
+=Owe/
 -----END PGP MESSAGE-----
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-======================= bash cell | decrypt the message ========================
+=== bash cell | decrypt the message using the private key for repro@repros.dev ===
 
 gpg --decrypt --pinentry-mode loopback --passphrase=repro products/message.asc
 
