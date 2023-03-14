@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-
 PUBLIC_KEY_FILE=data/public.pgp
 PRIVATE_KEY_FILE=data/private.asc
 CLEAR_MESSAGE_FILE=data/message.txt
 ENCRYPTED_MESSAGE_FILE=products/message.asc
-
 
 # ------------------------------------------------------------------------------
 
@@ -46,7 +44,7 @@ END_CELL
 
 # ------------------------------------------------------------------------------
 
-bash_cell 'import the private key for repros.dev' << END_CELL
+bash_cell 'import the private key for repro@repros.dev' << END_CELL
 
 # import the private key file
 gpg --import --pinentry-mode loopback --passphrase=repro ${PRIVATE_KEY_FILE}
