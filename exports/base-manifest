@@ -1,2 +1,3 @@
 base-setup
 gnupg-runtime.purge-keys
+gnupg-runtime.redact-key
