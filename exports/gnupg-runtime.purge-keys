@@ -1,6 +1,14 @@
 #!/bin/bash
 
-# delete files in gnupg home directory
+# report error if directory to purge does not have the expected name
+if [[ "$(basename $GNUPGHOME)" != .gnupg ]]; then
+    echo "Error: gnupg-runtime.purgekeys: Directory referred to by GNUPGHOME is not named .gnupg:"
+    echo "Error: gnupg-runtime.purgekeys: GNUPGHOME=${GNUPGHOME}"
+    exit 1
+fi
 
-find ${GNUPGHOME} -depth -maxdepth 2 \( -type f -o -type s \) -exec rm -f {} \; 2>/dev/null
-find ${GNUPGHOME} -depth -maxdepth 1 -type d -exec rmdir {} \; 2>/dev/null
+# attempt to purge the .gnupg directory if it exists
+if [[ -d ${GNUPGHOME} ]] ; then
+    find ${GNUPGHOME} -depth -maxdepth 2 \( -type f -o -type s \) -exec rm -f {} \; 2>/dev/null
+    find ${GNUPGHOME} -depth -maxdepth 1 -type d -exec rmdir {} \; 2>/dev/null
+fi
